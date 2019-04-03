@@ -1,0 +1,83 @@
+*,
+*::after,
+*::before{
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.App {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  height: 100vw;
+  width: 100vw;
+}
+.console-img{
+  position: absolute;
+  transform: scale(3);
+  z-index: -1;
+}
+.modal{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  background: rgba(255, 255, 255, 0.842);
+}
+
+.modal-main{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.modal-display-none{
+  display: none!important;
+}
+
+.modal-display-block{
+  display: block!important;
+}
+.moda-display-flex{
+  display: flex!important;
+}
+.modal-p{
+  font-family: masseffect;
+  font-size: 30px;
+  padding: 20px;
+}
+
+.modal-button{ 
+  padding: 20px;
+  border: none;
+  background: #2e7d9e;
+  border-radius: 10px;
+  width: 150px;
+  height: 70px;
+  font-size: 15px;
+  color: #f7eeee;
+  margin: 5px;
+  cursor: pointer;
+}
+.game{
+  position: relative;
+  height: 90%;
+  width: 90%;
+  max-width: 500px;
+  max-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 2px #222, -2px -2px 2px #222;
+  margin-top: 50px;
+}
+
+@media (max-width: 600px) {
+  .game{
+    height: 90%;
+    width: 90%;
+  }
+}

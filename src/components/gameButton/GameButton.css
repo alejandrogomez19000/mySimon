@@ -1,0 +1,9 @@
+.btn {
+  width: 25%;
+  height: 25%;
+  background: rgb(226, 222, 222);
+  border:none;
+  -moz-box-shadow:    inset 0px 0px 1px 1px rgba(19, 19, 19, 0.596);
+  -webkit-box-shadow: inset 0px 0px 1px 1px rgba(19, 19, 19, 0.596);
+  box-shadow:         inset 0px 0px 1px 1px rgba(19, 19, 19, 0.596);
+}

@@ -1,0 +1,148 @@
+*{
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+@font-face {
+	font-family: masseffect;
+	src:url(../fonts/me123.ttf);
+}
+/****************************************************************************************************
+
+BUTTONS MIXINS COLORS FOR SIMON
+
+******************************************************************************************************/
+
+.btn-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  transition: all 1s;
+  box-shadow: 0 0 0px 10px #222;
+}
+
+.start-button{
+  font-size: 20px;
+  background: #03A9F4;
+  font-weight: bold;
+  padding: 30px 60px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: "masseffect";
+  color: #424242
+}
+.start-button:hover{
+  background: #81D4FA;
+  color: rgb(141, 138, 138);
+}
+.btn-waiting{
+  background: #D8BFD8!important;
+}
+
+.btn-1{
+  background: rgba(255, 192, 203, 0.596);
+  
+}.btn-pressed-1{
+  background: #DB7093!important;
+}
+
+.btn-2{
+  background: rgba(205, 92, 92, 0.514);
+  
+}.btn-pressed-2{
+  background: #8B0000!important;
+}
+
+.btn-3{
+  background: rgba(255, 160, 122, 0.603);
+  
+}.btn-pressed-3{
+  background: #FF4500!important;
+}
+
+.btn-4{
+  background: rgba(240, 230, 140, 0.555);
+  
+}.btn-pressed-4{
+  background: #FFFF00!important;
+}
+
+.btn-5{
+  background: #BA55D3;
+  
+}.btn-pressed-5{
+  background: #483D8B!important;
+}
+.btn-6{
+  background: #D8BFD8;
+  
+}.btn-pressed-6{
+  background: #FF00FF!important;
+}
+.btn-7{
+  background: #98FB98;
+  
+}.btn-pressed-7{
+  background: #008000!important;
+}
+.btn-8{
+  background: #E6E6FA;
+  
+}.btn-pressed-8{
+  background: #DA70D6!important;
+}
+.btn-9{
+  background: #66CDAA;
+  
+}.btn-pressed-9{
+  background: #008080!important;
+}
+.btn-10{
+  background: #00FFFF;
+  
+}.btn-pressed-10{
+  background: #5F9EA0!important;
+}
+.btn-11{
+  background: #F5DEB3;
+  
+}.btn-pressed-11{
+  background: #D2691E!important;
+}
+.btn-12{
+  background: #CD853F;
+  
+}.btn-pressed-12{
+  background: #800000!important;
+}
+.btn-13{
+  background: #C0C0C0;
+  
+}.btn-pressed-13{
+  background: #2F4F4F!important;
+}
+.btn-14{
+  background: #B0E0E6;
+  
+}.btn-pressed-14{
+  background: #1E90FF!important;
+}
+.btn-15{
+  background: #FFFAF0;
+  
+}.btn-pressed-15{
+  background: #A9A9A9!important;
+}
+.btn-16{
+  background: #DCDCDC;
+  
+}.btn-pressed-16{
+  background: #000000!important
+}
+
