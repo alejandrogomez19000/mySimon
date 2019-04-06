@@ -27,7 +27,6 @@ const youWinModal = ({ handleMoreGames, handlePlayAgain ,isFinish }) => {
             <Link to={"/gamelist"}>
               <button 
                   className="modal-button" 
-                  onClick={handleMoreGames}
               >
                 Mas juegos!
               </button>

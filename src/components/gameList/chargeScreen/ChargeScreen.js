@@ -5,7 +5,7 @@ const ChargeScreen = ({isCharging }) => {
     const hiddenShowClass = isCharging ? "screen-display-flex" : "screen-display-none";
     return (
       <div 
-          className={ hiddenShowClass + " " + "charge-screen"}
+          className={ `${hiddenShowClass} charge-screen`}
       >
         <img 
             src={image} alt="charge screen"

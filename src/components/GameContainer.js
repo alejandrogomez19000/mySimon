@@ -15,6 +15,8 @@ class GameContainer extends Component {
       gameStarted: false
     }
   }
+  
+  // Function to make the buttons
 
   buildButton(buttons) {
     return buttons.map(element => {
@@ -28,10 +30,14 @@ class GameContainer extends Component {
    )
   }
 
+  // Function to pass the GameContainer's div to App
+
   handleDiv() {
     this.props.handle(this.myDiv)
   }
- 
+
+  // Function that start the game
+
   startGame(){
     this.setState({
       gameStarted: true
@@ -41,6 +47,7 @@ class GameContainer extends Component {
     } , 1000)
   
   }
+
   render() {
     const buildButtons = this.buildButton(array)
 

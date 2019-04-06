@@ -12,14 +12,14 @@ class App extends Component {
     this.state = {
       totalPattern: [],
       matchLevel: 0,
-      isSimonTurn: true,
-      isPlayerTurn: false,
+      isSimonTurn: false,
       youLose: false,
       comparative: [],
       isFinish: false,
       isGuessed:0,
       showModal:false,
-      maxLevel: 6
+      maxLevel: 6,
+      isPlayerTurn: false
     }
     this.handlePlayAgain = this.handlePlayAgain.bind(this);
     this.handle = this.handle.bind(this);
@@ -32,14 +32,18 @@ class App extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.state.matchLevel !== prevState.matchLevel && this.state.isSimonTurn === true) {
       if (this.state.matchLevel > this.state.maxLevel) {
-        this.handleIsFinish()
+        this.handleIsFinish();
       } else if (!this.state.isFinish && this.state.isSimonTurn === true) {
-        this.handleSimonTurn(this.state.totalPattern)
+        this.handleSimonTurn(this.state.totalPattern);
       }
-    } else if (this.state.isSimonTurn === false) {
-      this.handleInitiatePlayerTurn()
-    } 
+    } else if (this.state.isPlayerTurn !== prevState.isPlayerTurn){
+      if(this.state.isPlayerTurn === true){
+        this.handleInitiatePlayerTurn();
+      }
+    }
   }
+
+  // Function that is called if you won the game and show the modal to see more games
 
   handleIsFinish() {
     const audio = document.getElementById("final-sound");
@@ -50,6 +54,8 @@ class App extends Component {
     })
   }
 
+  // Functions to add a new pattern in the simon turn
+
   handleAddSequence(dataTotalPatterns) {
     this.setState({
       totalPattern: dataTotalPatterns,
@@ -58,6 +64,7 @@ class App extends Component {
       isSimonTurn: true,
     })
   }
+
   handleNewSequence(){
     let auxArr = []
     const { totalPattern } = this.state;
@@ -66,84 +73,98 @@ class App extends Component {
     auxArr.push(newSequence)
     this.handleAddSequence(auxArr)
   }
+  
+  // Function that declares the start of simon turn
+
   handleSimonTurn(patterns) {
-    helperSimonTurn(patterns, this.myDiv)
-    this.setState({
-      isSimonTurn: false,
-    })
+    helperSimonTurn(patterns, this.myDiv);
+    setTimeout(()=>{
+      this.setState({
+        isSimonTurn: false,
+        isPlayerTurn: true
+      })
+    }, patterns.length * 600)
   }
+
+   // Function that declares the player's turn and enables the buttons to compare them with buttons pressed by Simon
 
   handleInitiatePlayerTurn() {
     const myDiv = this.myDiv.current;
-    if (this.state.isSimonTurn === false) {
-      disabledFunction(myDiv, false)
-    } else {
-      disabledFunction(myDiv, true)
-    }
+    disabledFunction( myDiv , false );
   }
 
-  handle(myDiv) {
-    this.myDiv = myDiv
-  }
+   // Function that compare the player's clicks with the simon's clicks
 
   handlePlayerTurn = e => {
-    const myDiv = this.myDiv.current;
-    let { isGuessed   , comparative } = this.state;
-    const id = parseInt(e.target.id);
-
-    this.setState({
-      isPressed:true,
-      buttonPressed: id
-    })
-    setTimeout(()=>{
-      this.setState({
-        isPressed:false
-      })
-    }, 200)
-    if (comparative[isGuessed] === id) {
-      this.setState({
-        isGuessed: isGuessed +1
-      })
+    if(this.state.isPlayerTurn === true){
+      let { isGuessed   , comparative } = this.state;
+      const id = parseInt(e.target.id);
+      const myDiv = this.myDiv.current;
   
-      if (isGuessed +1 === comparative.length) {    
+      this.setState({
+        isPressed:true,
+        buttonPressed: id
+      })
+      setTimeout(()=>{
+        this.setState({
+          isPressed:false
+        })
+      }, 200)
+      if (comparative[isGuessed] === id) {
+        this.setState({
+          isGuessed: isGuessed +1
+        })
+    
+        if (isGuessed +1 === comparative.length) {  
+          const audio = document.getElementById(`win-sound`);
+
+          audio.play();
+
+          disabledFunction( myDiv,true );
+          
           this.setState({
             isSimonTurn: true,
-            isGuessed: 0
+            isGuessed: 0,
+            isPlayerTurn: false
           })
-          disabledFunction(myDiv, true)
-         const audio = document.getElementById(`win-sound`);
-         audio.play();
           setTimeout(()=>{
             this.handleNewSequence()
           }, 800)
+        }
+      } else {
+        const audio = document.getElementById(`lose-sound`);
+        audio.play();
+        this.setState({
+          youLose: true,
+          showModal: true
+        })
       }
-    } else {
-      const audio = document.getElementById(`lose-sound`);
-      audio.play();
-      this.setState({
-        youLose: true,
-        showModal: true
-      })
-    }
-    
+    } 
   }
 
   handlePlayAgain(){
-    this.setState({
-      totalPattern: [],
-      matchLevel: 0,
-      isSimonTurn: true,
-      isPlayerTurn: false,
-      youLose: false,
-      comparative: [],
-      isFinish: false,
-      isGuessed:0,
-      showModal:false
-    })
     setTimeout(()=>{
-      this.handleNewSequence();
-    } , 500) 
+      this.setState({
+        totalPattern: [],
+        matchLevel: 0,
+        isSimonTurn: true,
+        isPlayerTurn: false,
+        youLose: false,
+        comparative: [],
+        isFinish: false,
+        isGuessed:0,
+        showModal:false
+      })
+      setTimeout(()=>{
+        this.handleNewSequence();
+      } , 500)
+    } , 2000) 
   }
+  // Function that receive the GameContainer's div to use in this component
+  handle(myDiv) {
+    this.myDiv = myDiv;
+  }
+
   render() {
     return (
       <div className="App">
@@ -162,7 +183,6 @@ class App extends Component {
             <YouWinModal 
               isFinish={this.state.isFinish} 
               handlePlayAgain={this.handlePlayAgain} 
-              handleMoreGames={this.handleMoreGames}
             />
             <YouLoseModal
               youLose={this.state.youLose}

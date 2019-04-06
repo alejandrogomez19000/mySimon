@@ -13,40 +13,43 @@ class GameList extends Component {
     }
     this.get = this.get.bind(this)
   }
+
+  componentDidMount(){
+    this.get("https://cors-anywhere.herokuapp.com/https://www.giantbomb.com/api/games/?limit=100&format=json&api_key=7abd6dcdd73de03a0888b1e13cb57c651ce1b0c7&callback=responseReceived")
+    .then((result) =>{
+        console.log(result);
+        this.setState({
+          data: result,
+          isCharging: false,
+          showCards: true
+        })
+      }
+    )
+  }
+
   componentDidUpdate( prevProps , prevState ){
     if(this.state.data !== prevState.data){
      this.handleCreateGames();
-     console.log(this.state.games)
     }
   }
-   get(path) {
 
+  // Consume the api and return the results
+
+  get(path) {
     return fetch(path)
-      .then(res => res.json())
-      .then(
-          (result) => {
-              return result;
-          },
-          (error) => {
-              return "ERROR";
-          }
-      )
-    }
+            .then(res => res.json())
+            .then((result) => {
+                    return result;
+                },(error) => {
+                    return "ERROR";
+                }  
+            )
+  }
 
-    componentDidMount()
-    {
-      this.get("https://cors-anywhere.herokuapp.com/https://www.giantbomb.com/api/games/?limit=100&format=json&api_key=7abd6dcdd73de03a0888b1e13cb57c651ce1b0c7&callback=responseReceived")
-      .then((result) =>{
-          console.log(result);
-          this.setState({
-            data: result,
-            isCharging: false,
-            showCards: true
-          })
-      })
-
-    }
   
+
+  // Function that creates the random games for display in the game list
+
   handleCreateGames = () =>{
     let games = [];
     while (games.length < 15) {
@@ -60,7 +63,6 @@ class GameList extends Component {
   }
   
   render() {
-    console.log(this.state.isCharging , this.state.showCards , "desde el render de game list")
     return (
       <div 
       className="game-card-list-container"

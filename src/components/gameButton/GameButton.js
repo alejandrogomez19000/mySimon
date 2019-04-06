@@ -6,9 +6,11 @@ class GameButton extends Component {
     super(props)
     this.button = React.createRef();
   }
+
   componentDidMount(){
    this.button.current.classList.add(`btn-waiting`)
   }
+
   componentDidUpdate(prevProps, prevState){
     if(prevProps.isPressed !== this.props.isPressed){
       const button = this.button.current;
@@ -17,13 +19,15 @@ class GameButton extends Component {
       : button.classList.remove(`btn-pressed-${this.props.id}`)
     }
   }
+  
   render() {
     return (
-      <button 
+      <button
         className="btn" 
-        ref={this.button} 
-        disabled 
-        id={this.props.id}>
+        ref={this.button}
+        disabled  
+        id={this.props.id}
+      >
       </button>
     );
   }

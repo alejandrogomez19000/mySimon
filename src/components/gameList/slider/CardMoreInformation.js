@@ -16,6 +16,7 @@ class CardMoreInformation extends Component {
     this.myButtonPrev = React.createRef();
     this.myButtonNext = React.createRef();
   }
+  
   componentDidUpdate(prevProps){
     if(this.props.modalImages  
       !== prevProps.modalImages){    
@@ -41,7 +42,9 @@ class CardMoreInformation extends Component {
       })
     }
   }
- 
+
+  // Function that make the slider
+
   createSlider = data => {
     return data.map((element , index) => { 
       console.log(element.original)
@@ -53,6 +56,9 @@ class CardMoreInformation extends Component {
       );
     });
   }
+
+  // Function that display the charging component
+
   setCharging = () =>{
     this.setState({
       isCharging: true
@@ -78,7 +84,9 @@ class CardMoreInformation extends Component {
       alert("No hay mas imagenes!")
     }
   }
+  
   // Function to see the next image in slider
+
   nextImage = () =>{
     const mySlider =this.mySlider.current;
     const lastImage = mySlider.lastChild;
