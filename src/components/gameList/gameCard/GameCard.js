@@ -10,32 +10,50 @@ class GameCard extends Component {
   }
   
   render(){
-    const { description , name , image } = this.state.data;
-
+    let { description , name , image } = this.state.data;
+    if( typeof description === 'string' && description.length < 10 || description === null){
+      description = "Oh we not played this game yet!! Play it and tell us you opinion!!" ;
+    }
     return (
       <div 
-          className="game-card">
-        <div 
-            className="game-header"
+            className="game-card"
+            id={this.props.guid}
         >
-          <h1
-             className="game-title">{name}
-          </h1>
-        </div>
-        <div 
-            className="game-body"
-        >
-          <img 
-              src={image.original_url}
-              alt="Logo" 
-          />
           <div 
-              dangerouslySetInnerHTML={{ __html : description }}
-              className="game-description"
+              className="game-header"
           >
+            <img 
+                src={image.original_url} 
+                alt={name} 
+            />
+          </div>
+          <div 
+              className="game-body"
+          >
+                <div 
+                    className="game-information"
+                >
+                  <h1 
+                      className="game-title"
+                  >
+                      {name}
+                  </h1>
+                  <div 
+                      dangerouslySetInnerHTML={
+                        { __html : description } 
+                      }
+                      className="game-description"
+                  >
+                  </div>
+                </div>
+                <div 
+                    className="card-button" 
+                    onClick={this.props.watchMore}
+                >
+                    READ MORE
+                </div>
           </div>
         </div>
-      </div>
     );
   }
 }

@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
 import GameCard from '../gameCard/GameCard';
-import "./gameCardContainer.css"
-import image from "../../../images/image.jpg"
-import image1 from "../../../images/image1.jpg";
-import image2 from "../../../images/image2.jpg";
-import image3 from "../../../images/image3.png";
-import CardMoreInformation from '../slider/CardMoreInformation'
+import "./gameCardContainer.css";
+import CardMoreInformation from '../slider/CardMoreInformation';
+import ChargeScreen from "../chargeScreen/ChargeScreen";
+import GameHeader from "../gameHeader/GameHeader";
 
-const myArray = [image , image1 , image2 , image3 , image ]
 class GameCardContainer extends Component {
   constructor(props){
     super(props);
     this.state = {
       data: [],
-      showModal : false
+      showModal : false,
+      informationModal: [],
+      modalImages: [],
+      modalDescription:null,
+      modalTitle:null,
+      modalImg: null,
+      isCharging: false
     }
     this.watchMore = this.watchMore.bind(this);
   }
@@ -25,10 +28,27 @@ class GameCardContainer extends Component {
       })
     }
   }
-  watchMore(){ 
+  watchMore(e){ 
     this.setState({
-      showModal : true
+      isCharging: true
     })
+    const guid = e.target.parentElement.parentElement.id ;
+    const title = e.target.parentElement.children[0].children[0].innerText;
+    const desc = e.target.parentElement.children[0].children[1].innerText;
+    const image = e.target.parentElement.parentElement.children[0].children[0].src;
+    this.props.get(`https://cors-anywhere.herokuapp.com/https://www.giantbomb.com/api/game/${guid}/?format=json&api_key=7abd6dcdd73de03a0888b1e13cb57c651ce1b0c7`)
+      .then((result) =>{
+       this.setState({
+        informationModal: result.results,
+        modalImages : result.results.images,
+        modalTitle: title,
+        modalDescription: desc,
+        modalImg: image,
+        showModal : true,
+        isCharging: false
+      })
+    })
+    window.scrollTo(0, 0);
   }
   closeModal = () => {
     this.setState({
@@ -36,55 +56,36 @@ class GameCardContainer extends Component {
     })
   }
   render() {
+    const hideGameContainer = this.props.showCards ? "game-card-display-flex" : "game-card-display-none"
     return (
-      <div className="game-card-container">
-        {/* this.props.data !== [] ? 
+      <div 
+          className={ hideGameContainer + " " + "game-card-container"}
+      >
+         <GameHeader />
+        { this.props.data !== [] ? 
         this.props.data.map( element => (
-          <GameCard key={element[0].id} data={element[0]} />
+          <GameCard 
+              guid={element[0].guid}
+              key={element[0].id} 
+              data={element[0]} 
+              watchMore={this.watchMore}
+            />
           )
         )
         : console.log(this.props.data) 
-        */} 
-        <div 
-            className="game-card"
-        >
-          <div 
-              className="game-header"
-          >
-            <img 
-                src={image} 
-                alt="Logo" 
-            />
-          </div>
-          <div 
-              className="game-body"
-          >
-                <div 
-                    className="game-information"
-                >
-                  <h1 
-                      className="game-title"
-                  >
-                      un tiun tituloun titulo un titulo un titulo
-                  </h1>
-                  <div 
-                      className="game-description"
-                  >
-                      una un titulo un tituloun titulo un titulo un titulo
-                  </div>
-                </div>
-                <div 
-                    className="card-button" 
-                    onClick={this.watchMore}
-                >
-                    READ MORE
-                </div>
-          </div>
-        </div>
+        } 
+        
         <CardMoreInformation 
-            data={myArray} 
+            data={this.state.informationModal} 
             closeModal={this.closeModal} 
             showModal={this.state.showModal}
+            modalImages={this.state.modalImages}
+            modalDescription={this.state.modalDescription}
+            modalTitle={this.state.modalTitle}
+            modalImg={this.state.modalImg}
+        />
+        <ChargeScreen
+            isCharging={this.state.isCharging} 
         />
       </div>
     );

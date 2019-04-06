@@ -17,7 +17,8 @@ class App extends Component {
       comparative: [],
       isFinish: false,
       isGuessed:0,
-      showModal:false
+      showModal:false,
+      maxLevel: 6
     }
     this.handlePlayAgain = this.handlePlayAgain.bind(this);
     this.handle = this.handle.bind(this);
@@ -29,7 +30,7 @@ class App extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.matchLevel !== prevState.matchLevel && this.state.isSimonTurn === true) {
-      if (this.state.matchLevel === 7) {
+      if (this.state.matchLevel > this.state.maxLevel) {
         this.handleIsFinish()
       } else if (!this.state.isFinish && this.state.isSimonTurn === true) {
         this.handleSimonTurn(this.state.totalPattern)
@@ -40,6 +41,8 @@ class App extends Component {
   }
 
   handleIsFinish() {
+    const audio = document.getElementById("final-sound");
+    audio.play();
     this.setState({
       isFinish: true,
       showModal: true
@@ -107,8 +110,6 @@ class App extends Component {
             isGuessed: 0
           })
           disabledFunction(myDiv, true)
-
-         console.log("pasaste el nivel")
          const audio = document.getElementById(`win-sound`);
          audio.play();
           setTimeout(()=>{
@@ -118,7 +119,6 @@ class App extends Component {
     } else {
       const audio = document.getElementById(`lose-sound`);
       audio.play();
-      console.log('perdiste')
       this.setState({
         youLose: true,
         showModal: true

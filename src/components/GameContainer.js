@@ -1,5 +1,3 @@
-/** @format */
-
 import React, {Component} from 'react'
 import GameButton from './gameButton/GameButton'
 import './GameContainer.css'

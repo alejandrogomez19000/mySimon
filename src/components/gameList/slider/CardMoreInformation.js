@@ -3,117 +3,170 @@ import image from "../../../images/image.jpg";
 import "./slider.css";
 import SliderImg from "./SliderImg";
 
+
 class CardMoreInformation extends Component {
   constructor(props){
     super(props);
     this.state = {
-      data : this.props.data
+      data: null,
+      isCharging: this.props.isCharging,
+      showModal: this.props.showModal
     }
     this.mySlider = React.createRef();
+    this.myButtonPrev = React.createRef();
+    this.myButtonNext = React.createRef();
   }
   componentDidUpdate(prevProps){
-    if(this.props.showModal 
-      !== prevProps.showModal){
-      const sliderLarg =  this.props.data.length * 100;
+    if(this.props.modalImages  
+      !== prevProps.modalImages){    
+      const sliderLarg =  this.props.modalImages.length * 100;
+      console.log(sliderLarg , this.props.data , "desde el componente did update")
       this.mySlider.current.style.width = sliderLarg.toString() + "%";
+      if(sliderLarg === 100){
+        this.mySlider.current.style.marginLeft = 0;
+      } else if (sliderLarg === 0){
+        const myButtonPrev = this.myButtonPrev.current;
+        const myButtonNext = this.myButtonNext.current;
+        const mySlider = this.mySlider.current;
+        
+        mySlider.style.display = "none";
+        myButtonNext.style.display = "none";
+        myButtonPrev.style.display = "none";
+      }
+    } else if (this.props.data !== prevProps.data){
+      this.setState({
+        data : this.props.data,
+        isCharging: false,
+        showModal: true
+      })
     }
   }
+ 
   createSlider = data => {
-    return data.map((element , index) => { console.log(element , "desde el map")
+    return data.map((element , index) => { 
+      console.log(element.original)
       return ( 
         <SliderImg 
-        source={element}
-        key={index}/>
+          source={element.original}
+          key={index}
+        />
       );
     });
   }
-
+  setCharging = () =>{
+    this.setState({
+      isCharging: true
+    })
+  }
   // Function to see the prev image in slider
 
   prevImage = () =>{
     const mySlider =this.mySlider.current;
     const lastImage = mySlider.lastChild;
     const firstImage = mySlider.firstChild;
-   
-    mySlider.classList.add("move-left");
-    setTimeout(()=>{
-      mySlider.classList.remove("move-left");
-      lastImage.after(firstImage);
-    } , 900);
+    const button = this.myButtonPrev.current;
+    button.disabled = true;
+    if(mySlider.children.length > 1){
+      mySlider.classList.add("move-left");
+      setTimeout(()=>{
+        mySlider.classList.remove("move-left");
+        lastImage.after(firstImage);
+        button.disabled = false;
+      } , 900);
+      
+    } else {
+      alert("No hay mas imagenes!")
+    }
   }
   // Function to see the next image in slider
   nextImage = () =>{
     const mySlider =this.mySlider.current;
     const lastImage = mySlider.lastChild;
     const firstImage = mySlider.firstChild;
-
-    mySlider.classList.add("move-rigth");
-    setTimeout(()=>{
-      mySlider.classList.remove("move-rigth");
-      firstImage.before(lastImage);
-    } , 900)
+    const button = this.myButtonNext.current;
+    button.disabled = true;
+    if(mySlider.children.length > 1){
+      mySlider.classList.add("move-rigth");
+      setTimeout(()=>{
+        mySlider.classList.remove("move-rigth");
+        firstImage.before(lastImage);
+        button.disabled = false;
+      } , 900)
+    } else {
+      alert("No hay mas imagenes!")
+    }
   }
 
   render(){
     const showHideClassName = this.props.showModal ? "modal-display-flex" : "modal-display-none";
-    return (
-      <div 
-          className={showHideClassName + " " + "information-modal"}
-      >
-          <div 
-              className="game-information-modal"
-          >
-            <div 
-                className="close-button" 
-                onClick={this.props.closeModal}
-            >
-                X
-            </div>
+    const { modalDescription , modalTitle , modalImg } = this.props;
 
-            <h1 
-              className="information-modal-title"
+    if(this.props.data !== [] ){
+      return (
+        <div 
+            className={showHideClassName + " " + "information-modal"}
+        >
+            <div 
+                className="game-information-modal"
             >
-              un titulo
-            </h1>
+              <div 
+                  className="close-button" 
+                  onClick={this.props.closeModal}
+              >
+                  X
+              </div>
+  
+              <h1 
+                className="information-modal-title"
+              >
+                { modalTitle }
+              </h1>
+              
+              <img 
+                className="information-modal-img" 
+                src={modalImg} 
+                alt="esta es una imagen"
+              />
+  
+              <div 
+                className="information-modal-description"
+                dangerouslySetInnerHTML={
+                  modalDescription !== "null" 
+                  ? { __html : modalDescription } 
+                  : { __html : "Vaya! todavia no hemos jugado este juego!" } 
+                }
+              >
+              </div>
+            </div>
             
-            <img 
-              className="information-modal-img" 
-              src={image} 
-              alt="esta es una imagen"
-            />
-
             <div 
-              className="information-modal-description"
-            >
-              un tituloun tituloun tituloun titulo
-              un tituloun tituloun tituloun tituloun tituloun tituloun titulo
-              un tituloun tituloun tituloun tituloun tituloun tituloun tituloun tituloun titulo
+              className="slider-container"
+              >
+                <div 
+                  ref={ this.mySlider } 
+                  className="slider"
+                >
+                  {this.createSlider(this.props.modalImages)}
+                </div>
+                <button 
+                  ref={this.myButtonPrev}
+                  className="btn-prev"
+                  onClick={this.prevImage}
+                >
+                  <i className="fas fa-chevron-left"></i>
+                </button>
+                <button 
+                  ref={this.myButtonNext}
+                  className="btn-next"
+                  onClick={this.nextImage}
+                >
+                  <i className="fas fa-chevron-right"></i>
+                </button>
             </div>
-          </div>
-          
-          <div 
-            className="slider-container"
-            >
-              <div 
-                ref={ this.mySlider } 
-                className="slider"
-              >
-                {this.createSlider(this.props.data)}
-              </div>
-              <div 
-                className="btn-prev"
-                onClick={this.prevImage}
-              >
-                <i className="fas fa-chevron-left"></i>
-              </div>
-              <div className="btn-next"
-                onClick={this.nextImage}
-              >
-                <i className="fas fa-chevron-right"></i>
-              </div>
-          </div>
-      </div>
-    );
+        </div>
+      )
+    }  
+   
   }
 }
 

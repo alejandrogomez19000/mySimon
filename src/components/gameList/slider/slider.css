@@ -5,7 +5,6 @@
 **********************************************************************************************************/
 .information-modal{
   width: 95vw;
-  margin-top: 20px;
   background: #fff;
   border-radius: 10px;
   -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
@@ -17,6 +16,8 @@
   justify-content: center;
   align-items: center;
   transition: all 2s ease;
+  padding-bottom: 100px;
+  top: 20px;
 }
 .information-modal-img, .information-modal-title , .information-modal-description , .slider-container{
   width: 95%;
@@ -35,6 +36,10 @@
   flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
+  max-height: 400vh;
+  padding-bottom: 30px;
+  width: 100%;
+  max-width: 1024px;
 }
 .information-modal-description{
   padding: 30px 0;
@@ -52,6 +57,7 @@
   display: flex;
   flex-direction: row;
   margin-left: -100%;
+  height: 250px;
 }
 .slider-container{
   position: relative;
@@ -60,6 +66,7 @@
 }
 .slider-img{
   width: 100%;
+  height: 250px;
   overflow: hidden;
   display: block;
 }
@@ -69,19 +76,37 @@
   object-fit: cover;
 }
 .btn-prev{
+  border:none;
   position: absolute;
   top: 40%;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background: #fff;
   font-size: 30px;
   margin-left: 10px;
   cursor:pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 0 1px #222;
 }
 .btn-next{
+  border:none;
   position: absolute;
   top: 40%;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background: #fff;
   right: 0;
   font-size: 30px;
   margin-right: 10px;
   cursor:pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 0 1px #222;
 }
 .close-button{
   font-size: 12px;
@@ -90,6 +115,8 @@
   top: 10px;
   color: red;
   font-weight: bold;
+  cursor: pointer;
+  padding: 10px;
 }
 
 .move-left{
@@ -123,11 +150,32 @@
 
 @media (min-width: 600px) {
   .close-button {
-    font-size: 15px;
+    font-size: 25px;
   }
   .information-modal-description {
     padding: 30px 0;
     font-size: 17px;
     color: #a5a0a0;
+  }
+  .slider-img{
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    display: block;
+  }
+  .slider{
+    height: 350px;
+  }
+}
+
+@media (min-width: 900px) {
+  .slider-img{
+    width: 100%;
+    height: 550px;
+    overflow: hidden;
+    display: block;
+  }
+  .slider{
+    height: 550px;
   }
 }

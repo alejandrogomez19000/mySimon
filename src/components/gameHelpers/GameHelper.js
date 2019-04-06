@@ -9,8 +9,6 @@ export const disabledFunction = (div, boolean) => {
 
 export const helperSimonTurn = (patterns, data) => {
   const myDiv = data.current
-  console.log(patterns, 'hijo')
-
   patterns.forEach((e, i) => {
     if (e === parseInt(myDiv.children[e - 1].id)) {
       timerAdd(myDiv, e, i)
