@@ -8,6 +8,7 @@ import GameHeader from "../gameHeader/GameHeader";
 class GameCardContainer extends Component {
   constructor(props){
     super(props);
+    this.myModal = React.createRef();
     this.state = {
       data: [],
       showModal : false,

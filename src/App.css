@@ -12,6 +12,9 @@
   justify-content: center;
   height: 100vw;
   width: 100vw;
+  margin-top: 80px;
+  margin-bottom: 80px;
+  max-height: 1000px;
 }
 .console-img{
   position: absolute;
@@ -74,10 +77,31 @@
   box-shadow: 2px 2px 2px #222, -2px -2px 2px #222;
   margin-top: 50px;
 }
+.fadein {
+  animation: fadein 1s linear;
+}
+.fadeout {
+  animation: fadeout 1s linear;
+}
+@keyframes fadeout {
+  from{opacity: 1;}
+  to{opacity: 0;}
+}
+
+@keyframes fadein {
+  from{opacity: 0;}
+  to{opacity: 1;}
+}
 
 @media (max-width: 600px) {
   .game{
     height: 90%;
     width: 90%;
+  }
+}
+@media (min-width: 700px){
+  .App{
+    max-height: 100vh;
+    margin-bottom: 30px;
   }
 }

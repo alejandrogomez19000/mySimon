@@ -1,9 +1,10 @@
-import React, {Component} from 'react'
-import GameContainer from './components/GameContainer'
-import './App.css'
-import {disabledFunction, helperSimonTurn} from './components/gameHelpers/GameHelper'
-import YouWinModal from "./components/modal/YouWinModal"
-import YouLoseModal from "./components/modal/YouLoseModal"
+import React, {Component} from 'react';
+import GameContainer from './components/GameContainer';
+import './App.css';
+import {disabledFunction, helperSimonTurn} from './components/gameHelpers/GameHelper';
+import YouWinModal from "./components/modal/YouWinModal";
+import YouLoseModal from "./components/modal/YouLoseModal";
+import GameHeader from "./components/gameList/gameHeader/GameHeader";
 
 class App extends Component {
   constructor(props) {
@@ -146,6 +147,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <GameHeader />
           <div className="game">
             <GameContainer
               handleNewSequence={this.handleNewSequence}
