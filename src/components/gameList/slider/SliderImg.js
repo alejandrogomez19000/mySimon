@@ -4,6 +4,7 @@ class SliderImg extends Component {
   constructor(props){
     super(props);
   }
+ 
   render() {
     const image = this.props.source;
     return (
@@ -13,7 +14,7 @@ class SliderImg extends Component {
             <img 
                 src={image} 
                 alt={this.props.alt}
-            />
+            />   
         </div>
     );
   }
