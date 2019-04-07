@@ -23,9 +23,11 @@
 
 .screen-display-none{
   display: none!important;
+  opacity: 0;
 }
 .screen-display-flex{
   display: flex!important;
+  opacity: 1;
 }
 .navbar{
   width: 100%;

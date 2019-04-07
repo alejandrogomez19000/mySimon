@@ -60,7 +60,7 @@ class GameCardContainer extends Component {
     const hideGameContainer = this.props.showCards ? "game-card-display-flex" : "game-card-display-none"
     return (
       <div 
-          className={ hideGameContainer + " " + "game-card-container"}
+          className={ `${hideGameContainer} game-card-container`}
       >
          <GameHeader />
         { this.props.data !== [] ? 
