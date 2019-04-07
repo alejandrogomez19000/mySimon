@@ -112,7 +112,7 @@ class CardMoreInformation extends Component {
     if(this.props.data !== [] ){
       return (
         <div 
-            className={showHideClassName + " " + "information-modal"}
+            className={`${showHideClassName} information-modal`}
         >
             <div 
                 className="game-information-modal"
@@ -139,9 +139,7 @@ class CardMoreInformation extends Component {
               <div 
                 className="information-modal-description"
                 dangerouslySetInnerHTML={
-                  modalDescription !== "null" 
-                  ? { __html : modalDescription } 
-                  : { __html : "Vaya! todavia no hemos jugado este juego!" } 
+                  { __html : modalDescription } 
                 }
               >
               </div>

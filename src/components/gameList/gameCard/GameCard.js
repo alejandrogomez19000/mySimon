@@ -12,7 +12,7 @@ class GameCard extends Component {
   render(){
     let { description , name , image } = this.state.data;
     if( typeof description === 'string' && description.length < 10 || description === null){
-      description = "Oh we not played this game yet!! Play it and tell us you opinion!!" ;
+      description = "Oh!! we have not played this game yet!!<br /> Play it and tell us you opinion!!" ;
     }
     return (
       <div 
